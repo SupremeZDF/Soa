@@ -25,6 +25,19 @@ namespace Soa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen((s) =>
+            {
+                s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Version = "v1.1.0",
+                    Description = "¹þ¹þ",
+                    Title = "haha1",
+                    TermsOfService = null
+                });
+                var name = AppDomain.CurrentDomain.BaseDirectory;
+                var file = System.IO.Path.Combine(name, "Soa.xml");
+                s.IncludeXmlComments(file);
+            });
             services.AddControllers();
         }
 
@@ -35,6 +48,12 @@ namespace Soa
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "eqeqweda");
+            });app.UseSwagger();
 
             app.UseHttpsRedirection();
 
