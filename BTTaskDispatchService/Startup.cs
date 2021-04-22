@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Hangfire;
 using Hangfire.SqlServer;
 using Hangfire.AspNetCore;
+using BTTaskDispatchService.ServicTool;
 
 namespace BTTaskDispatchService
 {
@@ -43,19 +44,22 @@ namespace BTTaskDispatchService
                 var filePath = System.IO.Path.Combine(path, "BTTaskDispatchService.xml");
                 services.IncludeXmlComments(filePath);
             });
+            HangfireLogServer.WriteLog("服务初始化开始");
             services.AddHangfire(configuration => configuration
                              .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                              .UseSimpleAssemblyNameTypeSerializer()
                              .UseRecommendedSerializerSettings()
+                             //使用sqlserver
                              .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
                              {
                                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
                                  SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                                 QueuePollInterval = TimeSpan.Zero,
+                                 QueuePollInterval = TimeSpan.FromMinutes(1),
                                  UseRecommendedIsolationLevel = true,
                                  DisableGlobalLocks = true
                              }));
             services.AddHangfireServer();
+            HangfireLogServer.WriteLog("服务初始化结束");
             services.AddControllers();
         }
 
@@ -70,12 +74,16 @@ namespace BTTaskDispatchService
             app.UseRouting();
             app.UseAuthorization();
             app.UseSwagger();
+            using var server = new BackgroundJobServer();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "任务调度服务");
             }); app.UseSwagger();
-            app.UseHangfireDashboard();
-            backgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
+            //配置授权
+            app.UseHangfireDashboard("/hangfire",new DashboardOptions { Authorization = new[] { new MyAuthorizationFilter()} });
+            //注册定时服务
+            backgroundJob.HangforeAddJob();
+            //backgroundJob.Schedule(() => Console.WriteLine("Delayed!"), TimeSpan.FromSeconds(30));
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

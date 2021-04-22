@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>7918a342-565d-4d67-b6ae-fde396fa03f1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,6 +14,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.22" />
     <PackageReference Include="Hangfire.Core" Version="1.7.22" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.22" />
+    <PackageReference Include="SqlSugarCore" Version="5.0.2.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
   </ItemGroup>
 

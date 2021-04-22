@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using SqlSugar;
 
 namespace BTTaskDispatchService.ServicTool
 {
@@ -11,27 +12,35 @@ namespace BTTaskDispatchService.ServicTool
     {
         public static IConfiguration _configuration;
 
-        public static void CreateConfiguration() 
+        static BTServiceFactory()
+        {
+            CreteInstance();
+        }
+
+        /// <summary>
+        /// 创建实列
+        /// </summary>
+        public static void CreteInstance()
         {
             _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
         }
 
-        public static IConfiguration GetConfiguration() 
+        public static IConfiguration GetConfiguration()
         {
-            if (_configuration == null) 
+            if (_configuration == null)
             {
-                CreateConfiguration();
+                CreteInstance();
             }
             return _configuration;
         }
 
-        public static string GetSectionValyue(string Str) 
+        public static string GetSectionValyue(string Str)
         {
             if (_configuration == null)
             {
-                CreateConfiguration();
+                CreteInstance();
             }
-            return _configuration.GetSection("ConnectionString").Value;
+            return _configuration.GetSection(Str).Value;
         }
     }
 }
