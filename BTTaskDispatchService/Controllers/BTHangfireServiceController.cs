@@ -32,7 +32,7 @@ namespace BTTaskDispatchService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public Result HangFireAddService([FromBody]ServerInfo serverInfo)
+        public Result HangFireAddService([FromBody] List<ServerInfo> serverInfo)
         {
             Result result = new Result() { code = 1 };
             try
@@ -42,9 +42,12 @@ namespace BTTaskDispatchService.Controllers
                     result.code = 0;
                     return result;
                 }
-                HangFilejobService.HangforeAddJob(serverInfo);
-                var data = AutoMapperTool<ServerInfo, ServerInfoTable>.ToClass(serverInfo);
-                HangFilejobService.infoTables.Add(data);
+                foreach (var i in serverInfo)
+                {
+                    HangFilejobService.HangforeAddJob(i);
+                    var data = AutoMapperTool<ServerInfo, ServerInfoTable>.ToClass(i);
+                    HangFilejobService.infoTables.Add(data);
+                }
             }
             catch (Exception ex)
             {
@@ -59,7 +62,7 @@ namespace BTTaskDispatchService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public Result HangFireDeleteService([FromBody] ServerInfo serverInfo)
+        public Result HangFireDeleteService([FromBody]List<ServerInfo> serverInfo)
         {
             Result result = new Result() { code = 1 };
             try
@@ -69,7 +72,11 @@ namespace BTTaskDispatchService.Controllers
                     result.code = 0;
                     return result;
                 }
-                HangFilejobService.HangforeRemoveJob(serverInfo);
+                foreach (var i in serverInfo) 
+                {
+                    HangFilejobService.HangforeRemoveJob(i);
+                }
+               
             }
             catch (Exception ex)
             {

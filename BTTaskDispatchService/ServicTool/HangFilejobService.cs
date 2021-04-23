@@ -116,6 +116,8 @@ namespace BTTaskDispatchService.ServicTool
         {
             try
             {
+                if (!serverInfo.FIsUsable)
+                    return;
                 RecurringJob.RemoveIfExists(serverInfo.FTaskName);
                 var type = typeof(ServerMethod);
                 MethodInfo method = type.GetMethod(serverInfo.FTaskMethod);
@@ -163,7 +165,8 @@ namespace BTTaskDispatchService.ServicTool
             else if (serverInfo.FTaskSchedulingype == 3)
             {
                 //延时方法
-                BackgroundJob.Schedule(methodCall, TimeSpan.FromMilliseconds(Convert.ToInt32(serverInfo.FExecTime)));
+                var minnu = Convert.ToInt32(serverInfo.FExecTime);
+                BackgroundJob.Schedule(methodCall, TimeSpan.FromMinutes(minnu));
             }
             else if (serverInfo.FTaskSchedulingype == 2)
             {
