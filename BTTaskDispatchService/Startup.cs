@@ -52,9 +52,9 @@ namespace BTTaskDispatchService
                              //使用sqlserver
                              .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
                              {
-                                 CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                                 SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                                 QueuePollInterval = TimeSpan.FromMinutes(1),
+                                 CommandBatchMaxTimeout = TimeSpan.FromMinutes(1),
+                                 SlidingInvisibilityTimeout = TimeSpan.FromMinutes(1),
+                                 QueuePollInterval = TimeSpan.Zero,
                                  UseRecommendedIsolationLevel = true,
                                  DisableGlobalLocks = true
                              }));
@@ -74,13 +74,14 @@ namespace BTTaskDispatchService
             app.UseRouting();
             app.UseAuthorization();
             app.UseSwagger();
-            using var server = new BackgroundJobServer();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "任务调度服务");
-            }); app.UseSwagger();
+            });
             //配置授权
             app.UseHangfireDashboard("/hangfire",new DashboardOptions { Authorization = new[] { new MyAuthorizationFilter()} });
+            var options = new BackgroundJobServerOptions() { WorkerCount = Environment.ProcessorCount * 5 };
+            app.UseHangfireServer(options);
             //注册定时服务
             backgroundJob.HangforeAddJob();
             //backgroundJob.Schedule(() => Console.WriteLine("Delayed!"), TimeSpan.FromSeconds(30));
