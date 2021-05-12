@@ -10,6 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SuperSocket" Version="2.0.0-beta.8" />
+    <PackageReference Include="SuperSocket.ProtoBase" Version="2.0.0-beta.8" />
+    <PackageReference Include="SuperSocket.Server" Version="2.0.0-beta.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
   </ItemGroup>
 

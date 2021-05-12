@@ -187,6 +187,7 @@
     <Compile Include="Models\ChatServer.cs" />
     <Compile Include="Models\OneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Run\Chat.cs" />
     <Compile Include="Run\OneRun.cs" />
   </ItemGroup>
   <ItemGroup>
