@@ -41,5 +41,10 @@ namespace SuperSocket.Models
             //add you logics which will be executed after the session is closed
             base.OnSessionClosed(reason);
         }
+
+        //protected override void OnSessionStarted() 
+        //{
+        //    base.OnSessionStarted();
+        //}
     }
 }
