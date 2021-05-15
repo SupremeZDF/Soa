@@ -20,8 +20,18 @@ namespace SuperSocket.Run
                 Console.ReadKey();
                 return;
             }
-            
-            //var result 
+            var result = bootstrap.Start();
+            foreach (var item in bootstrap.AppServers) 
+            {
+                if (item.State == ServerState.Running)
+                {
+                    var i = item;
+                }
+                else 
+                {
+                    var i = item;
+                }
+            }
         }
     }
 }

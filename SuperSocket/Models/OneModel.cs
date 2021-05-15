@@ -17,7 +17,13 @@ namespace SuperSocket.Models
 
         protected override void OnSessionStarted()
         {
+            base.OnSessionStarted();
             this.Send("Welcome to SuperSocket Telnet Server");
+        }
+
+        public override void Send(string message)
+        {
+            base.Send(message + "\r\n");
         }
 
         protected override void HandleUnknownRequest(StringRequestInfo requestInfo)
