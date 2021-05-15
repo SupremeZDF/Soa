@@ -14,13 +14,14 @@ namespace SuperSocket.Run
             //配置文件启动 supersocket
             IBootstrap bootstrap = BootstrapFactory.CreateBootstrap();
 
-            if (!bootstrap.Initialize()) 
+            if (!bootstrap.Initialize())
             {
                 Console.WriteLine("初始化失败");
                 Console.ReadKey();
                 return;
             }
-            var result 
+            
+            //var result 
         }
     }
 }
