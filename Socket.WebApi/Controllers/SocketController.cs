@@ -20,7 +20,8 @@ namespace Socket.WebApi.Controllers
         [HttpGet]
         public void MethodTest() 
         {
-            SockeProccess.Process();
+           //var t =  HttpContext.WebSockets.IsWebSocketRequest;
+           //HttpContext.WebSockets.AcceptWebSocketAsync();
         }
     }
 }

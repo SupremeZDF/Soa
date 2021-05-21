@@ -8,7 +8,9 @@ namespace SocKet.Client
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello World!");
-            SocketOneModel.ProCessRocket();
+           // SocketOneModel.ProCessRocket();
+
+            SocketOneModel.Name();
         }
     }
 }

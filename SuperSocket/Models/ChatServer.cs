@@ -11,7 +11,7 @@ namespace SuperSocket.Models
 {
     public class ChatServer : AppServer<OneModel>
     {
-        public ChatServer(): base(new CommandLineReceiveFilterFactory(encoding:Encoding.UTF8)) { }
+        //public ChatServer(): base(new CommandLineReceiveFilterFactory(encoding:Encoding.UTF8)) { }
 
         protected override bool Setup(IRootConfig rootConfig, IServerConfig config)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SocKet.Client.Model
 {
@@ -13,10 +15,12 @@ namespace SocKet.Client.Model
         /// </summary>
         public static void ProCessRocket() 
         {
+            //Thread.Sleep(10000);
+            
             Console.WriteLine("启动一个Socket客户端链接");
 
-            int port = 2018;
-            string host = "127.0.0.1"; //服务端ip地址
+            int port = 2020;
+            string host = "192.168.131.162"; //服务端ip地址
             IPAddress ip = IPAddress.Parse(host);
             IPEndPoint iPEndPoint = new IPEndPoint(ip, port);
 
@@ -36,6 +40,28 @@ namespace SocKet.Client.Model
                 string str = Encoding.ASCII.GetString(recBytes, 0, bytes);
                 Console.WriteLine($"服务器返回 ：{str}");
             }
+        }
+
+        public async static void Name()
+        {
+            Thread.Sleep(1000);
+            Console.WriteLine("1");
+            Thread.Sleep(1000);
+            Console.WriteLine("1");
+            Console.WriteLine($"线程ID:{Thread.CurrentThread.ManagedThreadId}");
+            Names();
+            Console.WriteLine($"线程ID:{Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        public async static void Names()
+        {
+            Thread.Sleep(1000);
+            Console.WriteLine("1");
+            await Task.Run(() => { Console.WriteLine("哈哈"); });
+            Console.WriteLine($"线程ID:{Thread.CurrentThread.ManagedThreadId}");
+            Thread.Sleep(3000);
+            Console.WriteLine($"线程ID:{Thread.CurrentThread.ManagedThreadId}");
+            Console.WriteLine("1");
         }
     }
 }

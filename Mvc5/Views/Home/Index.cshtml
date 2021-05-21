@@ -29,3 +29,77 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+<button id="aaa">dsdsdasda</button>
+<button id="bbb">发送</button>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    var ws;
+    function ConnetionWebSocket() {
+
+        // $.ajax({
+        //     type: "get"http://localhost:59434/
+        // })
+        
+        if ("WebSocket" in window) {
+            ws = new WebSocket("ws://192.168.100.49:811/Handler/LoginHandler/Validate.ashx")
+            console.log("您的浏览器支持WebSocket");
+            ws.onopen = function () {
+                console.log("open");
+                //ws.send("hello");
+            }
+            ws.onmessage = function (e) {
+                console.log(e);
+            }
+            ws.onclose = function (e) {
+                console.log(e.data);
+            }
+            ws.onerror = function (e) {
+                console.log(e.data);
+            }
+        } else {
+            console.log("您的浏览器不支持WebSocket");
+        }
+    }
+    ConnetionWebSocket();
+
+    $("#aaa").click(function () {
+        console.log(ws);
+        console.log(ws.readyState);
+        ws.close();
+    });
+    $("#bbb").click(function () {
+        console.log(ws.readyState);
+        ws.send("dasdasd");
+    });
+
+    //function CacheLoginInfo() {
+    //    //登陆地区
+    //    var cdir = returnCitySN['cname'];
+    //    var cid = returnCitySN['cid'];   //区域ID
+    //    var userAgentss = navigator.appVersion; //游览器版本
+    //    var mimeTypes = navigator.mimeTypes[1].type;  //类型
+    //    var platform = navigator.platform; //平台
+    //    var IP = returnCitySN['cip'];
+    //    $.ajax({
+    //        url: "http://localhost:44379/Home/Name",
+    //        data: {
+    //            Action: "loginSocket",
+    //            cdir: cid,
+    //            cdir: cdir,
+    //            userAgentss: userAgentss,
+    //            mimeTypes: mimeTypes,
+    //            platform: platform,
+    //            IP: IP
+    //        },
+    //        type: "POST",
+    //        dataType: "JSON",
+    //        success: function (result) {
+    //            if (result.code != 1) {
+    //                alert(result.message);
+    //            }
+    //        }
+    //    });
+    //}
+    //CacheLoginInfo();
+</script>
